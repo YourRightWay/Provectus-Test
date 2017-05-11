@@ -1,45 +1,4 @@
-// let store = [
-//     {
-//         id: 1,
-//         name: 'Node 1',
-//         isChecked: false,
-//         childs: [{
-//             id: 11,
-//             name: 'Node 1.1',
-//             isChecked: true,
-//         }]
-//     },
-//     {
-//         id: 2,
-//         name: 'Node 2',
-//         isChecked: false,
-//         childs: [{
-//             id: 21,
-//             name: 'Node 2.1',
-//             isChecked: true,
-//             childs: [{
-//                 id: 211,
-//                 name: 'Node 2.1.1',
-//                 isChecked: true,
-//             }]
-//         },{
-//             id: 22,
-//             name: 'Node 2.2',
-//             isChecked: true,
-//             childs: [{
-//                 id: 221,
-//                 name: 'Node 2.2.1',
-//                 isChecked: true,
-//             }]
-//         }]
-//     }
-// ]
-
-// let oneNode = {
-//     id: 11123,
-//     name: 'Node 1.1.2.2',
-//     isChecked: true,
-// };
+import navPanel from './templates/nav'
 
 /** @jsx createElem */
 
@@ -47,66 +6,48 @@ function createElem( type, props, ...children) {
     return { type, props, children };
 }
 
-const navPanel = (
-    <div class="nav-panel">
-        <button id="js-get-data">Get data</button>
-        <button id="js-update-data">Update data</button>
-        <button id="js-update-node">Update node</button>
-    </div>
-);
-
 const oneNode = (
-    <div id="test" class="form-group">
-        <label htmlFor="">Node 123123</label>
-        <input type="checkbox" id="212312" name='Node 1.2.3.3.' checked={false} />
+    <div id="1233123" class="form-group form-group--test">
+        <label>Node was updated</label>
+        <input type="checkbox" id="212312" name='Node 1.2.3.3' checked={false} />
     </div>
 )
 
 
 const store = (
-    <form id="form-root" class="form-panel">
-        <div class="form-group">
+    <form id="20" class="form-panel">
+        <div class="form-group" id="1">
             <label htmlFor="">Node 1</label>
-            <input type="checkbox" id="1" name='Node 1' checked={false} />
+            <input type="checkbox" id="input1" name='Node 1' checked={false} />
            
-            <div class="form-group">
+            <div class="form-group" id="11">
                 <label htmlFor="">Node 1.1</label>
-                <input type="checkbox" id="11" name='Node 1.1' checked={true} />
+                <input type="checkbox" id="input11" name='Node 1.1' checked={true} />
+
+                <div class="form-group" id="111">
+                    <label htmlFor="">Node 1.1</label>
+                    <input type="checkbox" id="input111"  name='Node 1.1' checked={true} />
+
+                    <div class="form-group" id="1111">
+                        <label htmlFor="">Node 1.1.1</label>
+                        <input type="checkbox" id="input1111"  name='Node 1.1.1' checked={true} />
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="2">
             <label htmlFor="">Node 2</label>
-            <input type="checkbox" id="2" name='Node 2' checked={false} />
+            <input type="checkbox" id="input2" name='Node 2' checked={false} />
+        </div>
 
-            <div class="form-group">
-                <label htmlFor="">Node 2.1</label>
-                <input type="checkbox" id="21" name='Node 2.1' checked={true} />
+        <div class="form-group" id="3">
+            <label htmlFor="">Node 3</label>
+            <input type="checkbox" id="input3" name='Node 3' checked={true} />
 
-                <div class="form-group">
-                    <label htmlFor="">Node 2.1.1</label>
-                    <input type="checkbox" id="211" name='Node 2.1.1' checked={false} />
-                </div>
-
-                <div class="form-group">
-                    <label htmlFor="">Node 2.1.2</label>
-                    <input type="checkbox" id="212" name='Node 2.1.2' checked={true} />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label htmlFor="">Node 2.2</label>
-                <input type="checkbox" id="22" name='Node 2.2' checked={true} />
-
-                <div class="form-group">
-                    <label htmlFor="">Node 2.2.1</label>
-                    <input type="checkbox" id="221" name='Node 2.2.1' checked={false} />
-                </div>
-
-                <div class="form-group">
-                    <label htmlFor="">Node 2.2.2</label>
-                    <input type="checkbox" id="222" name='Node 2.2.2' checked={true} />
-                </div>
+            <div class="form-group" id="31">
+                <label htmlFor="">Node 3.1</label>
+                <input type="checkbox" id="input31" name='Node 3.1' checked={false} />
             </div>
         </div>
     </form>
@@ -125,20 +66,23 @@ class Render {
 
         const $el = document.createElement(node.type);
         
-        if (node.props.id) {
+        if (node.props !== null && node.props.id) {
             $el.id = node.props.id;
+        }
+        
+        if(node.type === 'div') {
+            $el.className = node.props.class;
         }
 
         if (node.type === 'input') {
             $el.type = node.props.type;
             $el.name = node.props.name;
             $el.checked = node.props.checked;
-
-            // console.log($el)
-            //
-            // $el.addEventListener('change', (e) => {
-            //     console.log(e.target.id)
-            // });
+            
+            $el.addEventListener('change', (e) => {
+                node.props.checked = e.target.checked
+                this.updateNode(e.target.id, node);
+            });
         }
 
         node.children.map(this._createNode).forEach($el.appendChild.bind($el));
@@ -192,43 +136,34 @@ class App extends Render {
     }
     
     updateNode (id, node) {
-        if (id && isNaN(id)) throw new Error('Id must be a number!');
         if(!(typeof node === 'object')) throw new Error('Node must be an object');
-        let trigger = false, oldState = this._state;
-
-        function parseState(state) {
-            
-            for(let i = 0; i < state.length; i++) {
-                if(state[i].type) {
-
-                    if(state[i].props.id && state[i].props.id === id+'') {
-                        trigger = true;
-                        state[i] = node;
-                        break
-                    }
-
-                    if(state[i].hasOwnProperty('children') && state[i].children.length > 0) {
-                        parseState(state[i].children)
-                        if (trigger) {
+        let trigger = false;
+        
+        function parseState (state) {
+            if(state.props !== null && state.props.id &&  state.props.id === id+'') {
+                state = node;
+            } else {
+                for (var i = 0; i < state.children.length; i++) {
+                    if (state.children[i].type) {
+                        if (state.children[i].props !== null && state.children[i].props.id && state.children[i].props.id === id+'') {
+                            trigger = true;
+                            state.children[i] = node;
                             break
+                        } else {
+                            parseState(state.children[i])
+                            if (trigger) {
+                                break
+                            }
                         }
                     }
-                }
+                } 
             }
+            
+            return state
         }
         
-        parseState(this._state.children)
-        this._updateNode(this._root, this._state, oldState, 1);
-
-        // ToDo dirty Hack
-
-        this.resetState();
-        this.renderInterface();
-        this.render();
-    }
-    
-    resetState () {
-        this._root.innerHTML = ""
+        this._updateNode(this._root, parseState((JSON.parse(JSON.stringify(this._state)))), this._state, 1);
+        parseState(this._state)
     }
 
     renderInterface() {
@@ -243,7 +178,7 @@ class App extends Render {
         });
 
         document.getElementById('js-update-node').addEventListener('click', () => {
-            this.updateNode(221, oneNode);
+            this.updateNode(1111, oneNode);
         });
     }
 
