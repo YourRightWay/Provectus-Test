@@ -219,7 +219,16 @@ class App extends Render {
         
         parseState(this._state.children)
         this._updateNode(this._root, this._state, oldState, 1);
+
+        // ToDo dirty Hack
+
+        this.resetState();
+        this.renderInterface();
         this.render();
+    }
+    
+    resetState () {
+        this._root.innerHTML = ""
     }
 
     renderInterface() {
@@ -246,6 +255,8 @@ class App extends Render {
 const app = new App(document.getElementById('root'), store) 
 app.renderInterface();
 app.render();
+
+
 
 
 
