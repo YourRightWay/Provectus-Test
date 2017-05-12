@@ -52,8 +52,6 @@ class Render {
     }
 
     _updateNode = ($parent, newNode, oldNode, index) => {
-        console.log($parent.childNodes[index])
-
         if (!oldNode) {
             $parent.appendChild(
                 this._createNode(newNode)
@@ -91,7 +89,7 @@ class App extends Render {
             this._state = ls;
         } else {
             this._state = state;
-            //localStorage.setItem('_data', JSON.stringify(state));
+            localStorage.setItem('_data', JSON.stringify(state));
         }
         
         this._root = root;
@@ -103,9 +101,8 @@ class App extends Render {
     }
     
     update (value) {
-        console.log(this._state)
         this._updateNode(this._root, value, this._state, 1);
-        //localStorage.setItem('_data', JSON.stringify(value));
+        localStorage.setItem('_data', JSON.stringify(value));
     }
     
     updateNode (id, node) {
@@ -135,7 +132,7 @@ class App extends Render {
             return state
         }
 
-        //localStorage.setItem('_data', JSON.stringify(parseState((cloneObject(this._state)))));
+        localStorage.setItem('_data', JSON.stringify(parseState((cloneObject(this._state)))));
         this._updateNode(this._root, JSON.parse(localStorage.getItem('_data')), this._state, 1);
     }
 
