@@ -57,9 +57,11 @@ class Render {
                 this._createNode(newNode)
             );
         } else if (!newNode) {
-            $parent.removeChild(
-                $parent.childNodes[index]
-            );
+            if($parent.childNodes[index]) {
+                $parent.removeChild(
+                    $parent.childNodes[index]
+                );
+            }
         } else if (this._changeNode(newNode, oldNode)) {
             $parent.replaceChild(
                 this._createNode(newNode),
@@ -69,12 +71,14 @@ class Render {
             const newLength = newNode.children.length;
             const oldLength = oldNode.children.length;
             for (let i = 0; i < newLength || i < oldLength; i++) {
-                this._updateNode(
-                    $parent.childNodes[index],
-                    newNode.children[i],
-                    oldNode.children[i],
-                    i
-                ); 
+                if($parent.childNodes[index]) {
+                    this._updateNode(
+                        $parent.childNodes[index],
+                        newNode.children[i],
+                        oldNode.children[i],
+                        i
+                    );
+                }
             }
         }
     }
