@@ -1,57 +1,8 @@
-import navPanel from './templates/nav'
-
-/** @jsx createElem */
-
-function createElem( type, props, ...children) {
-    return { type, props, children };
-}
-
-const oneNode = (
-    <div id="1233123" class="form-group form-group--test">
-        <label>Node was updated</label>
-        <input type="checkbox" id="212312" name='Node 1.2.3.3' checked={false} />
-    </div>
-)
-
-
-const store = (
-    <form id="20" class="form-panel">
-        <div class="form-group" id="1">
-            <label htmlFor="">Node 1</label>
-            <input type="checkbox" id="input1" name='Node 1' checked={false} />
-           
-            <div class="form-group" id="11">
-                <label htmlFor="">Node 1.1</label>
-                <input type="checkbox" id="input11" name='Node 1.1' checked={true} />
-
-                <div class="form-group" id="111">
-                    <label htmlFor="">Node 1.1</label>
-                    <input type="checkbox" id="input111"  name='Node 1.1' checked={true} />
-
-                    <div class="form-group" id="1111">
-                        <label htmlFor="">Node 1.1.1</label>
-                        <input type="checkbox" id="input1111"  name='Node 1.1.1' checked={true} />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group" id="2">
-            <label htmlFor="">Node 2</label>
-            <input type="checkbox" id="input2" name='Node 2' checked={false} />
-        </div>
-
-        <div class="form-group" id="3">
-            <label htmlFor="">Node 3</label>
-            <input type="checkbox" id="input3" name='Node 3' checked={true} />
-
-            <div class="form-group" id="31">
-                <label htmlFor="">Node 3.1</label>
-                <input type="checkbox" id="input31" name='Node 3.1' checked={false} />
-            </div>
-        </div>
-    </form>
-);
+import navPanel from './templates/nav' 
+import store from './templates/store' 
+import oneNode from './templates/node' 
+import updateState from './templates/update' 
+import { cloneObject } from './utils'
 
 class Render {
     _changeNode (node1, node2) {
@@ -71,7 +22,17 @@ class Render {
         }
         
         if(node.type === 'div') {
-            $el.className = node.props.class;
+            if (node.props !== null && node.props.id) {
+                $el.className = `${node.props.class} ${node.props.class}-${node.props.id}`;
+            } else {
+                $el.className = node.props.class;
+            }
+        }
+
+        if (node.type === 'label') {
+            if(node.props !== null && node.props.htmlFor) {
+                $el.setAttribute("for", node.props.htmlFor);
+            }
         }
 
         if (node.type === 'input') {
@@ -82,6 +43,7 @@ class Render {
             $el.addEventListener('change', (e) => {
                 node.props.checked = e.target.checked
                 this.updateNode(e.target.id, node);
+                localStorage.setItem('_data', JSON.stringify(this.getData));
             });
         }
 
@@ -90,6 +52,8 @@ class Render {
     }
 
     _updateNode = ($parent, newNode, oldNode, index) => {
+        console.log($parent.childNodes[index])
+
         if (!oldNode) {
             $parent.appendChild(
                 this._createNode(newNode)
@@ -112,7 +76,7 @@ class Render {
                     newNode.children[i],
                     oldNode.children[i],
                     i
-                );
+                ); 
             }
         }
     }
@@ -121,18 +85,27 @@ class Render {
 class App extends Render {
     constructor(root, state) {
         super()
-        this._state = state;
+        let ls = JSON.parse(localStorage.getItem('_data'));
+
+        if(ls && ls !== null) {
+            this._state = ls;
+        } else {
+            this._state = state;
+            //localStorage.setItem('_data', JSON.stringify(state));
+        }
+        
         this._root = root;
     }
     
-    get getData () {
+    get getData () { 
         console.log(this._state)
         return this._state;
     }
     
     update (value) {
         console.log(this._state)
-        this._state = value
+        this._updateNode(this._root, value, this._state, 1);
+        //localStorage.setItem('_data', JSON.stringify(value));
     }
     
     updateNode (id, node) {
@@ -161,9 +134,9 @@ class App extends Render {
             
             return state
         }
-        
-        this._updateNode(this._root, parseState((JSON.parse(JSON.stringify(this._state)))), this._state, 1);
-        parseState(this._state)
+
+        //localStorage.setItem('_data', JSON.stringify(parseState((cloneObject(this._state)))));
+        this._updateNode(this._root, JSON.parse(localStorage.getItem('_data')), this._state, 1);
     }
 
     renderInterface() {
@@ -174,11 +147,11 @@ class App extends Render {
         });
 
         document.getElementById('js-update-data').addEventListener('click', () => {
-            this.update(store)
+            this.update(updateState)
         });
 
         document.getElementById('js-update-node').addEventListener('click', () => {
-            this.updateNode(1111, oneNode);
+            this.updateNode(3, oneNode);
         });
     }
 

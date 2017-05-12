@@ -3,9 +3,6 @@
 @import "styles/_mixin";
 @import "styles/_default";
 
-//@import "styles/_typography";
-//
-
 .nav-panel {
   position: fixed;
   bottom: 0;
@@ -38,6 +35,38 @@
     }
   }
 }
+
+form {
+  margin: 40px;
+}
+
+.form-group {
+  position: relative;
+  padding: 6px 0;
+
+  input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 24px;
+    height: 24px;
+  }
+
+  label {
+    padding: 4px 0 4px 34px;
+    display: inline-block;
+  }
+
+  &-11, &-21, &-31, &-41 {
+    margin-left: 12px;
+  }
+
+  &-111 {
+    margin-left: 24px;
+  }
+
+}
+
 
 
 

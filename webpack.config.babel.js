@@ -17,7 +17,7 @@ console.log(`Your process.env: ${ENV}`)
 export default {
 
     entry: [
-        './client/nav.js', './client/style.scss'
+        './client/index.js', './client/style.scss'
     ],
 
     output: {
