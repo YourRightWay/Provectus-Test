@@ -36,8 +36,6 @@
   },
   "scripts": {
     "start": "webpack-dev-server --progress",
-    "build": "NODE_ENV=production webpack --config ./webpack.production.config.js --progress",
-    "windows_build": "set NODE_ENV=production && webpack --config ./webpack.production.config.js --progress",
     "test": "react-scripts test --env=jsdom",
     "lint": "eslint src",
     "eject": "react-scripts eject"
