@@ -16,7 +16,7 @@ let initialState = {
         {
             id: 1,
             name: 'Node 1',
-            isChecked: true,
+            isChecked: true, 
             childs: [{
                 id: 11,
                 name: 'Node 1.1',
