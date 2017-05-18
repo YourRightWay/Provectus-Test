@@ -1,3 +1,8 @@
+// convert px to em
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
+
 @mixin text($font, $size, $lh, $ls, $color) {
   font: em($size) $font;
   line-height: $lh;

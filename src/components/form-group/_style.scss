@@ -1,0 +1,26 @@
+.app {
+  .form-group {
+    position: relative;
+
+    input {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      left: 0;
+    }
+
+    label {
+      padding: 6px 0 6px 36px;
+      display: inline-block;
+      @include text($default-font, 14, 24px, normal, #000);
+    }
+
+    input[type=checkbox] ~ .form-group {
+      display: none;
+    }
+
+    input[type=checkbox]:checked ~ .form-group {
+      display: block;
+    }
+  }
+}

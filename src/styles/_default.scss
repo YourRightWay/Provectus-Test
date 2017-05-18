@@ -28,6 +28,9 @@ html, body {
   }
 }
 
+/*
+ * Iphone fix input zoom
+ */
 input[type='text'],
 input[type='number'],
 textarea {
@@ -47,3 +50,11 @@ textarea {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
+.app {
+  width: 90%;
+  margin: 24px auto;
+}
+
+
+
