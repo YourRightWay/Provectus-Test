@@ -6,7 +6,7 @@ import { shallow, mount, render } from 'enzyme';
 import StateNotify from './index'
 
 describe('StateNotify testing', function() {
-    it("Render container", function() {
+    it('Render container', function() {
         expect(mount(<StateNotify />).find('.get-state').length).toBe(1);
     });
 

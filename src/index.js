@@ -82,12 +82,12 @@ class App extends React.Component {
 
     update() {
         store.dispatch(updateState({ id: 20,  name: 'Node 2.1', isChecked: true }))
-        setLocalStorage("__data", store.getState)
+        setLocalStorage('__data', store.getState)
     }
 
     updateNode () {
         store.dispatch(updateNode(221, oneNode))
-        setLocalStorage("__data", store.getState)
+        setLocalStorage('__data', store.getState)
     }
     
     getData () {
@@ -98,7 +98,7 @@ class App extends React.Component {
 
     handleChange(id) {
         store.dispatch(updateNode(id))
-        setLocalStorage("__data", store.getState)
+        setLocalStorage('__data', store.getState)
     }
 
     parseState(state) {

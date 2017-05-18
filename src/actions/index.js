@@ -2,7 +2,7 @@ import { UPDATE_STATE, UPDATE_NODE } from '../constants'
 import { warning } from '../utils'
 
 export const updateState = (state) => {
-    warning(state, ['number', 'string', 'boolean', 'symbol'], "Update state");
+    warning(state, ['number', 'string', 'boolean', 'symbol'], 'Update state');
     
     let data = state;
 
@@ -18,7 +18,7 @@ export const updateState = (state) => {
 }
 
 export const updateNode = (id, node) => (getState) => {
-    warning(id, ['object', 'boolean', 'symbol'], "Update node");
+    warning(id, ['object', 'boolean', 'symbol'], 'Update node');
     
     let tempState = getState,  
         trigger = false;
