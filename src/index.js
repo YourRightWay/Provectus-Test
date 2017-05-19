@@ -7,48 +7,11 @@ import { updateState, updateNode } from './actions'
 import { getLocalStorage, setLocalStorage } from './utils'
 import './style.scss';
 
+import initialState from './initionStateData'
+
 import NavPanel from './components/nav-panel'
 import FormGroup from './components/form-group'
 import StateNotify from './components/state-notify'
-
-let initialState = {
-    testData: [
-        {
-            id: 1,
-            name: 'Node 1',
-            isChecked: true, 
-            childs: [{
-                id: 11,
-                name: 'Node 1.1',
-                isChecked: true,
-            }],
-        },
-        {
-            id: 2,
-            name: 'Node 2',
-            isChecked: false,
-            childs: [{
-                id: 21,
-                name: 'Node 2.1',
-                isChecked: true,
-                childs: [{
-                    id: 211,
-                    name: 'Node 2.1.1',
-                    isChecked: true,
-                }]
-            }, {
-                id: 22,
-                name: 'Node 2.2',
-                isChecked: true,
-                childs: [{
-                    id: 221,
-                    name: 'Node 2.2.1',
-                    isChecked: true,
-                }]
-            }]
-        }
-    ]
-}
 
 let oneNode = {
     id: 1322321,
@@ -61,7 +24,7 @@ var store = new Store(
         getLocalStorage('__data') : initialState, 
     reducer);
 
-class App extends React.Component {
+export default class App extends React.Component {
     constructor(props) {
         super(props);
         
@@ -138,58 +101,3 @@ ReactDOM.render(
     <App />,
     document.getElementById('root')
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-// class App extends React.Component {
-//     constructor(props) {
-//         super(props);
-//
-//         this.state = {
-//             store: testdata
-//         };
-//
-//         this.parseState = this.parseState.bind(this)
-//     }
-//
-//     parseState (state) {
-//
-//         let createItemState = state.map((data, index) => (
-//             <Item key={data.id} checked={data.isChecked} id={data.id} name={data.name}>
-//                 {
-//                     data.hasOwnProperty('childs') ? this.parseState(data.childs) : ''
-//                 }
-//             </Item>
-//         ))
-//
-//         return createItemState
-//     }
-//
-//     render () {
-//         let { store } = this.state;
-//
-//         return (
-//             <div className='app'>
-//                 {this.parseState(store)}
-//             </div>
-//         )
-//     }
-// }
-//
-// ReactDOM.render(
-//     <App />,
-//     document.getElementById('root')
-// );

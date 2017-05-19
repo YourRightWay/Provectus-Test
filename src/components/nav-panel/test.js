@@ -14,4 +14,5 @@ describe('NavPanel testing', function() {
     it('Render container', function() {
         expect(mount(<NavPanel />).find('.nav-panel').length).toBe(1);
     });
+
 });
