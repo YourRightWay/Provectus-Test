@@ -2,7 +2,7 @@ export default class Store {
     constructor(state, reducer) {
         this._state = state;
         this._reducer = reducer;
-        this._callbacks = [];
+        this._callbacks = []; 
     }
 
     dispatch(action) {
@@ -23,7 +23,7 @@ export default class Store {
         return this._state;
     }
 
-    subscribe(callback) {
+    subscribe(callback) { 
         this._callbacks.push(callback);
         return () => this._callbacks = this._callbacks.filter(cb => cb !== callback)
     }

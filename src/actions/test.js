@@ -1,7 +1,7 @@
 import * as actions from './index'
 import { UPDATE_STATE, UPDATE_NODE } from '../constants'
 
-describe('actions', () => {
+describe('Testing actions', () => {
     it('Testing action "updateState"', () => {
         let data = [] || {};
         const expectedAction  = {

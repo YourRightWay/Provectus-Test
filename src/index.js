@@ -38,7 +38,7 @@ export default class App extends React.Component {
         this.parseState = this.parseState.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
-    
+
     componentDidMount () {
         store.subscribe(() => this.forceUpdate())
     }
