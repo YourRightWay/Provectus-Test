@@ -4,25 +4,19 @@ import ReactDOM from 'react-dom';
 import Store from './store';
 import reducer from './reducer';
 import { updateState, updateNode } from './actions'
-import { getLocalStorage, setLocalStorage } from './utils'
+import { setLocalStorage } from './utils'
 import './style.scss';
-
-import initialState from './initionStateData'
 
 import NavPanel from './components/nav-panel'
 import FormGroup from './components/form-group'
 import StateNotify from './components/state-notify'
 
-let oneNode = {
-    id: 1322321,
-    name: 'Node 1.23431',
-    isChecked: true,
-};
-
-var store = new Store(
-        getLocalStorage('__data') !== null ? 
-        getLocalStorage('__data') : initialState, 
-    reducer);
+/**
+ * @description Initialize store
+ * @type {Store}
+ */
+var store = new Store();
+store.createStore(reducer)
 
 export default class App extends React.Component {
     constructor(props) {
@@ -49,6 +43,13 @@ export default class App extends React.Component {
     }
 
     updateNode () {
+        
+        let oneNode = {
+            id: 1322321,
+            name: 'Node 1.23431',
+            isChecked: true,
+        };
+        
         store.dispatch(updateNode(221, oneNode))
         setLocalStorage('__data', store.getState)
     }
