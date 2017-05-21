@@ -2,6 +2,7 @@ jest.unmock('./index');
 
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
+import sinon from 'sinon';
 
 import NavPanel from './index'
 
@@ -15,4 +16,14 @@ describe('NavPanel testing', function() {
         expect(mount(<NavPanel />).find('.nav-panel').length).toBe(1);
     });
 
+    it('NavPanel props', () => {
+        const wrapper = shallow(
+            <NavPanel getState={this.getData}
+                      updateState={this.update}
+                      updateNode={this.updateNode}/>
+        );
+        
+        expect(typeof wrapper.props).toBe('function');
+        
+    });
 });
